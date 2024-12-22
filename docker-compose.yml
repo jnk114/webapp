@@ -1,0 +1,28 @@
+version: '3'
+services:
+  webapp:
+    build: .
+    image: jnk114/test:latest
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - ORACLE_HOST=db
+      - ORACLE_PORT=1521
+      - ORACLE_SID=ORCLCDB
+      - ORACLE_PDB=ORCLPDB1
+      - ORACLE_USER=root
+      - ORACLE_PASSWORD=20050303YMZ
+
+  db:
+    image: oracleinanutshell/oracle-xe-18c
+    environment:
+      - ORACLE_PWD=20050303YMZ
+    ports:
+      - "1521:1521"
+    volumes:
+      - db-data:/opt/oracle/oradata
+
+volumes:
+  db-data:
